@@ -1,0 +1,204 @@
+
+########################################################
+########## for interviewing candidates #################
+########################################################
+
+rate your experience with Unity3D out of 10
+rate your experience with NodeJS out of 10
+rate your experience with SocketIO out of 10
+
+#UNITY {
+			define PREFABS
+			
+			unity application life cycle
+			
+			define inspector tab
+			
+			in a scene there is a button and a function to be executed and NOTHING ELSE AT ALL
+					> will it work?
+					
+			your approach to build a map that follow a particular theme
+			
+			how would you move an object from position A to B without update, fixed update or late update
+			
+			teen patti how will you make user look like its sitting at the center of table
+			
+			photon hash table define
+					> how will you sync room properties 
+					> how will you sync player properties
+					
+			how would you execute a method on Player B's system from Player A's system > photon RPC
+			
+}
+
+#NODEJS {
+		
+		nodejs how would you increase a number each second
+
+		define express middle-ware
+		
+}
+
+#SOCKETIO {
+
+		how to join socket room
+			> how would you send a message to particular user, given that they have not joined any room explicitly
+			
+		sending message to particular user
+
+}
+
+
+
+
+########################################################
+############  for parsing json from socket #############
+########################################################
+
+
+
+		Debug.Log("Event Name : " + e.name + " Data : " + e.data);
+
+        string recCallBackString = e.data.ToString();
+
+        Debug.Log("recCallback sub string: " + recCallBackString);
+
+        string callBackSubstring = recCallBackString.Substring(1, recCallBackString.Length - 2);
+
+        Debug.Log("Callback sub string: " + callBackSubstring);
+
+        var userListsJSON = sJSON.Parse(callBackSubstring);
+		
+		foreach(var userName in userListsJSON)
+        {
+            Debug.Log("Listing user with name: " + userName.ToString());
+            Debug.Log("Listing user with name: " + userName.Value);
+            shiftLoginManager.GetComponent<ShiftLoginManager>().ListUsersWithName(userName.Value);
+        }
+		
+		
+
+########################################################		
+########## for moving object without Update ############
+########################################################
+
+
+
+        IEnumerator FakeThrowingCard(Transform target)
+        {
+            transform.position = dealersDeck.transform.position;
+
+            //  Transform inInitPosition = initPosition.transform;
+            //  Transform inTargetPosition = targetPosition.transform;
+
+
+            //float smoothing = 1.0f;
+
+            while (Vector3.Distance(transform.position, target.position) > 0.05f)
+            {
+
+                transform.position = Vector3.Lerp(transform.position, target.position, smoothing * Time.deltaTime);
+
+                yield return null;
+
+            }
+
+
+            //transform.SetParent(myParentObject.transform);
+
+            // done
+
+            yield return new WaitForSeconds(wfs);
+
+            //finished
+
+        }
+		
+		
+		
+		
+########################################################		
+############### for input to upper case ################
+########################################################
+
+
+        
+public InputField inputField;
+this goes to start function:
+
+  inputField.onValidateInput += delegate (string input, int charIndex, char addedChar) {
+        return nameValidation(addedChar);
+  };
+and this is the addedChar function that does the control and modification on per character basis:
+
+ private char nameValidation(char c)
+ {
+     if (c >= 'A' && c <= 'Z') {
+         return (char)((int)c - 'A' + 'a');
+     }
+     else if ((c >= 'a' && c <= 'z') || (c >= '0' && c <= '9') || c == '_' || c == ' ') {
+         return c;
+     } else {
+         return '\0';
+     }
+ }
+no more onChange causing more change!
+
+
+And here's an even simpler function to force uppercase...
+
+ void Start()
+ {
+     your_input.onValidateInput += 
+         delegate (string s, int i, char c) { return char.ToUpper(c); };
+ }
+ 
+And if you want ONLY letters:
+
+ void Start()
+ {
+     your_input.onValidateInput += delegate (string s, int i, char c) { return char.ToUpper(c); };
+ }
+ 
+ char Val(char c)
+ {
+     c =  char.ToUpper(c);
+     return char.IsLetter(c) ? c : '\0';
+ }
+
+Here's uppercase letters only, and a length limit:
+
+     your_input.onValidateInput += delegate (string s, int i, char c)
+     {
+         if (s.Length >= 4) { return '\0'; }
+         c = char.ToUpper(c);
+         return char.IsLetter(c) ? c : '\0';
+     };
+
+(Alternately, don't forget the very handy .CharacterValidation approach. It is often all you need:)
+
+ void Start()
+ {
+     your_input.characterValidation = InputField.CharacterValidation.Alphanumeric;
+ }
+
+
+So when using .onValidateInput the .Net "char." functions are very handy.
+
+
+
+
+		
+###########################################################		
+### for layout bug fixing after adding items at runtime ###
+###########################################################
+
+public void InstantReturn()
+        {
+            transform.SetParent(dealersDeck);
+
+            transform.SetAsLastSibling();
+
+            LayoutRebuilder.ForceRebuildLayoutImmediate(dealersDeck);
+        }
+

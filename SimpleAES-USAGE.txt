@@ -1,0 +1,41 @@
+
+    public void AddToBalanceRefresh()
+    {
+
+        int currentBalance = GetCurrentBalance();
+
+        int newBalance = currentBalance + 10;
+
+        PlayerPrefs.SetString("balance", simpleAES.EncryptToString(newBalance.ToString()));
+
+      //  GameObject.Find("LoginManager").GetComponent<ShiftLoginManager>().RefreshScore();
+
+        Debug.Log("new balance: " + newBalance);
+    }
+
+
+    public void SubtractFromBalanceRefresh()
+    {
+
+        int currentBalance = GetCurrentBalance();
+
+        int newBalance = currentBalance - 10;
+
+        PlayerPrefs.SetString("balance", simpleAES.EncryptToString(newBalance.ToString()));
+
+      //  GameObject.Find("LoginManager").GetComponent<ShiftLoginManager>().RefreshScore();
+
+        Debug.Log("new balance: " + newBalance);
+    }
+
+    public int GetCurrentBalance()
+    {
+        string encryptedBalance = PlayerPrefs.GetString("balance");
+
+        string decryptedBalance = simpleAES.DecryptString(encryptedBalance);
+
+        int.TryParse(decryptedBalance, out int intBalance);
+
+        return intBalance;
+
+    }
