@@ -52,6 +52,16 @@ rate your experience with SocketIO out of 10
 
 
 ########################################################
+############  for parsing json from web response    ##############
+########################################################
+
+
+                // using SimpleJson;
+                JSONNode responseData = sJSON.Parse(www.downloadHandler.text);
+                string loginStatus = responseData["status"].Value;
+                Debug.Log("LoginStatus: " + loginStatus);
+
+########################################################
 ############  for parsing json from socket #############
 ########################################################
 
