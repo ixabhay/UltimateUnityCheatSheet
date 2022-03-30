@@ -212,3 +212,45 @@ public void InstantReturn()
             LayoutRebuilder.ForceRebuildLayoutImmediate(dealersDeck);
         }
 
+
+
+###########################################################		
+######### Reading data from REST API using SimpleJSON #########
+###########################################################
+
+
+IEnumerator FetchProductsNow()
+    {
+        yield return new WaitForEndOfFrame();
+
+        UnityWebRequest www = UnityWebRequest.Get("https://shiftescape.com/api/Offer/GetHomePageOffers?StoreId=3");
+
+        yield return www.SendWebRequest();
+
+        if(www.isHttpError || www.isNetworkError)
+        {
+            Debug.Log(www.error);
+        }
+        else
+        {
+           // Debug.Log(www.downloadHandler.text);
+            JSONNode itemsData = sJSON.Parse(www.downloadHandler.text);
+
+            totalProductsCount = itemsData["ResponseMessage"][1].Count;
+
+            Debug.Log("Some item: " + itemsData["ResponseMessage"][1][3]["ItemName"]);
+
+            for(int i = 0; i < totalProductsCount; i++)
+            {
+                if(i < productPlaceholders.Length)
+                {
+
+                    productPlaceholders[i].TextureURL = itemsData["ResponseMessage"][1][i]["ItemPhoto"];
+                    productPlaceholders[i].productName = itemsData["ResponseMessage"][1][i]["ItemName"];
+                    productPlaceholders[i].productPrice = itemsData["ResponseMessage"][1][i]["SellingPrice"];
+                    productPlaceholders[i].RefreshProduct();
+                }
+            }
+        }
+
+    }
