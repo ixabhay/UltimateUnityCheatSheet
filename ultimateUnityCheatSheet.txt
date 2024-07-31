@@ -1,3 +1,10 @@
+Backup unity project
+https://www.shiftescape.com/2024/07/which-all-files-and-folders-to-backup.html
+
+In order to be able to recreate the Unity Project from a backup zip, just remove Library and Temp folder when backing up the project to a zip file.
+
+
+
 
 ########################################################
 ########## for interviewing candidates #################
